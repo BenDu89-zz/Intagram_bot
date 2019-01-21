@@ -2,7 +2,7 @@ const puppeteer = require('puppeteer');
 const CREDS = require('./creds');
 
   // Enter the Hashtag that you are interessted in
-  var hashtag = "fitness";
+  var hashtag = "surf";
   // Run varible
   var step;
   // Default waiting time is 5000 ms
@@ -66,8 +66,8 @@ async function run() {
   //wait_time = Math.floor(Math.random() * 10000) + 1000;
   //await page.waitFor(wait_time);
   // Follow
-  //const FOLLOW_SELECTOR = 'body > div:nth-child(15) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
-  //await page.click(FOLLOW_SELECTOR);
+  const FOLLOW_SELECTOR = 'body > div:nth-child(15) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
+  await page.click(FOLLOW_SELECTOR);
   //Random waiting time to load and not get kicked from instagram
   //wait_time = Math.floor(Math.random() * 500) + 1000;
   //await page.waitFor(wait_time);

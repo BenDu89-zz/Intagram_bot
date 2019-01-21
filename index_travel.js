@@ -8,11 +8,18 @@ const CREDS = require('./creds');
   // Default waiting time is 5000 ms
   var wait_time = 3000
   // Enter how many people you like to follow and like a picture
-  var runs = 50
+  var runs = 1000
   // Enter sting you like to comment with
-  var comment = "<enter string>"
+  var comments = [
+    "❤️❤️❤️",
+    "✈️",
+    "Traveling is the best!!!",
+    ];
   // Array of added users
   var users = []
+  var count_likes = 0
+  var count_comments = 0
+  var count_follows = 0
 
 async function run() {
   const browser = await puppeteer.launch({
@@ -36,52 +43,68 @@ async function run() {
   const BUTTON_SELECTOR = 'button[type="submit"]';
   await page.click(BUTTON_SELECTOR);
 
-  await page.waitFor(5000);
+  await page.waitFor(3000);
 
   // Loop to follow, like and comment pictures
   for (step = 0; step < runs; step++) {
 
   // Going to the page of the Hashtage
-  await page.goto(`https://www.instagram.com/explore/tags/${hashtag}/`, {waitUntil: 'networkidle2'});
+    await page.goto(`https://www.instagram.com/explore/tags/${hashtag}/`, {waitUntil: 'networkidle2'});
 
-  await page.waitForSelector('#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a');
+    await page.waitForSelector('#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a');
 
   // Click on the first photo from the new ones
-  const PHOTO_SELECTOR = '#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a';
-  await page.click(PHOTO_SELECTOR);
+    const PHOTO_SELECTOR = '#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a';
+    await page.click(PHOTO_SELECTOR);
 
-  await page.waitForSelector('article header a');
+    await page.waitForSelector('article header a');
 
   // Saveing the username of the person how is the owner of that photo
-  const USER_NAME_SELECTOR = 'article header a';
-  let username = await page.evaluate((sel) => {
-        return document.querySelector(sel).getAttribute('href').replace('/', '');
-      }, USER_NAME_SELECTOR);
+    const USER_NAME_SELECTOR = 'article header a';
+    let username = await page.evaluate((sel) => {
+          return document.querySelector(sel).getAttribute('href').replace('/', '');
+        }, USER_NAME_SELECTOR);
 
-  users[step] = username.replace('/','');
+    users[step] = username.replace('/','');
 
-  console.log(users);
-  console.log(users.length);
+    console.log(users);
+    console.log(users.length);
 
   // Random waiting time to load and not get kicked from instagram
   //wait_time = Math.floor(Math.random() * 10000) + 1000;
   //await page.waitFor(wait_time);
   // Follow
-  const FOLLOW_SELECTOR = 'body > div:nth-child(15) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
-  await page.click(FOLLOW_SELECTOR);
+  if (Math.random() >= 0.95) {
+    const FOLLOW_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
+    await page.click(FOLLOW_SELECTOR);
   //Random waiting time to load and not get kicked from instagram
-  //wait_time = Math.floor(Math.random() * 500) + 1000;
+    wait_time = Math.floor(Math.random() * 500) + 1000;
+    console.log("FOLLOW!")
+    count_follows += 1
+  }
   //await page.waitFor(wait_time);
   // Like
-  const LIKE_SELECTOR = 'body > div:nth-child(15) > div > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n > button > span';
-  await page.click(LIKE_SELECTOR);
-  // Random waiting time to load and not get kicked from instagram
-  // Comment
-  //const COMMENT_SELECTOR = 'body > div:nth-child(15) > div > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div > form > textarea';
-  //await page.click(COMMENT_SELECTOR);
-  //await page.keyboard.type(comment, {delay:10});
-  //page.keyboard.press('Enter')
+  if (Math.random() >= 0.3) {
+    const LIKE_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n';
+    await page.click(LIKE_SELECTOR);
+    await page.waitFor(Math.floor(Math.random() * 1000) + 1000);
+    console.log("LIKE!")
+    count_likes += 1
+    if (Math.random() >= 0.95) {
+    // Comment
+      const COMMENT_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div > form > textarea';
+      await page.click(COMMENT_SELECTOR);
+      var comment = comments[Math.floor(Math.random()*comments.length)];
+      await page.keyboard.type(comment, {delay:10});
+      page.keyboard.press('Enter')
+      console.log("Comment!!!")
+      count_comments += 1
+    }
   }
+  console.log("Follows:"+count_follows)
+  console.log("Likes:"+count_likes)
+  console.log("Comments:"+count_comments)
+}
   for (step = 0; step < users.length; step++) {
   await page.goto(`https://www.instagram.com/${users[step]}/`, {waitUntil: 'networkidle2'});
   await page.waitForSelector('#react-root > section > main > div > header > section > div.Y2E37 > span > span.vBF20._1OSdk > button');
