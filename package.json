@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
+    "forever-monitor": "^1.7.1",
     "mongoose": "^5.3.11",
     "puppeteer": "^1.10.0"
   },

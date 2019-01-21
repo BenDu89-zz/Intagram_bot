@@ -6,7 +6,7 @@ const CREDS = require('./creds');
   // Run varible
   var step ;
   // Default waiting time is 5000 ms
-  var wait_time = 3000
+  var wait_time = 600
   // Enter how many people you like to follow and like a picture
   var runs = 1000
   // Enter sting you like to comment with
@@ -14,6 +14,15 @@ const CREDS = require('./creds');
     "❤️❤️❤️",
     "✈️",
     "Traveling is the best!!!",
+    "This is on my list as well",
+    "Wonderful picture 🤘🏼",
+    "Holy moly, so amazing! need to go there as well!!!",
+    "👍",
+    "This is so fucking dope 💪",
+    "Omgggg goal😭",
+    "Where is this wonderful place?",
+    "Need to go there @bendaman",
+    "This is beyond beautiful"
     ];
   // Array of added users
   var users = []
@@ -67,9 +76,6 @@ async function run() {
 
     users[step] = username.replace('/','');
 
-    console.log(users);
-    console.log(users.length);
-
   // Random waiting time to load and not get kicked from instagram
   //wait_time = Math.floor(Math.random() * 10000) + 1000;
   //await page.waitFor(wait_time);
@@ -79,16 +85,14 @@ async function run() {
     await page.click(FOLLOW_SELECTOR);
   //Random waiting time to load and not get kicked from instagram
     wait_time = Math.floor(Math.random() * 500) + 1000;
-    console.log("FOLLOW!")
     count_follows += 1
   }
   //await page.waitFor(wait_time);
   // Like
-  if (Math.random() >= 0.3) {
+  if (Math.random() >= 0.30) {
     const LIKE_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n';
     await page.click(LIKE_SELECTOR);
     await page.waitFor(Math.floor(Math.random() * 1000) + 1000);
-    console.log("LIKE!")
     count_likes += 1
     if (Math.random() >= 0.95) {
     // Comment
@@ -97,13 +101,15 @@ async function run() {
       var comment = comments[Math.floor(Math.random()*comments.length)];
       await page.keyboard.type(comment, {delay:10});
       page.keyboard.press('Enter')
-      console.log("Comment!!!")
       count_comments += 1
     }
   }
+
+  console.log("Profiles visited:"+users.length);
   console.log("Follows:"+count_follows)
   console.log("Likes:"+count_likes)
   console.log("Comments:"+count_comments)
+  console.log("<--->")
 }
   for (step = 0; step < users.length; step++) {
   await page.goto(`https://www.instagram.com/${users[step]}/`, {waitUntil: 'networkidle2'});
