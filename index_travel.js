@@ -94,7 +94,7 @@ async function run() {
     await page.click(LIKE_SELECTOR);
     await page.waitFor(Math.floor(Math.random() * 1000) + 1000);
     count_likes += 1
-    if (Math.random() >= 0.95) {
+    if (Math.random() >= 0.8) {
     // Comment
       const COMMENT_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div > form > textarea';
       await page.click(COMMENT_SELECTOR);
