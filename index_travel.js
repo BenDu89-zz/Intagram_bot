@@ -1,34 +1,36 @@
 const puppeteer = require('puppeteer');
 const CREDS = require('./creds');
 
-  // Enter the Hashtag that you are interessted in
-  var hashtag = "travel";
-  // Run varible
-  var step ;
-  // Default waiting time is 5000 ms
-  var wait_time = 600
-  // Enter how many people you like to follow and like a picture
-  var runs = 1000
-  // Enter sting you like to comment with
-  var comments = [
-    "❤️❤️❤️",
-    "✈️",
-    "Traveling is the best!!!",
-    "This is on my list as well",
-    "Wonderful picture 🤘🏼",
-    "Holy moly, so amazing! need to go there as well!!!",
-    "👍",
-    "This is so fucking dope 💪",
-    "Omgggg goal😭",
-    "Where is this wonderful place?",
-    "Need to go there @bendaman",
-    "This is beyond beautiful"
-    ];
-  // Array of added users
-  var users = []
-  var count_likes = 0
-  var count_comments = 0
-  var count_follows = 0
+// Enter the Hashtag that you are will to crawling with the bot!
+var hashtag = "travel";
+// Default waiting time is 0 ms - you can set hier the one you want!
+var wait_time = 0
+// Enter how many runs with the bot you would like to do!
+var runs = 1000
+// This is a given array of comments - change them if you want!
+var comments = [
+  "❤️❤️❤️",
+  "✈️",
+  "Traveling is the best!!!",
+  "This is on my list as well",
+  "Wonderful picture 🤘🏼",
+  "Holy moly, so amazing! need to go there as well!!!",
+  "👍",
+  "This is so fucking dope 💪",
+  "Omgggg goal😭",
+  "Where is this wonderful place?",
+  "Need to go there @bendaman",
+  "This is beyond beautiful"
+];
+
+// Run varible
+var step;
+const date = Date()
+// Array of added users an numbers of each action that was perfomed
+var users = []
+var count_likes = 0
+var count_comments = 0
+var count_follows = 0
 
 async function run() {
   const browser = await puppeteer.launch({
@@ -43,11 +45,11 @@ async function run() {
   // Machine will enter the username form creds.js
   const USERNAME_SELECTOR = 'input[name="username"]';
   await page.click(USERNAME_SELECTOR);
-  await page.keyboard.type(CREDS.username, {delay:10});
+  await page.keyboard.type(CREDS.username, {delay:15});
   // Machine will enter the password form creds.js
   const PASSWORD_SELECTOR = 'input[name="password"]';
   await page.click(PASSWORD_SELECTOR);
-  await page.keyboard.type(CREDS.password, {delay:10});
+  await page.keyboard.type(CREDS.password, {delay:15});
   // Machine will click the LogIn button
   const BUTTON_SELECTOR = 'button[type="submit"]';
   await page.click(BUTTON_SELECTOR);
@@ -75,24 +77,16 @@ async function run() {
         }, USER_NAME_SELECTOR);
 
     users[step] = username.replace('/','');
-
-  // Random waiting time to load and not get kicked from instagram
-  //wait_time = Math.floor(Math.random() * 10000) + 1000;
-  //await page.waitFor(wait_time);
   // Follow
   if (Math.random() >= 0.95) {
     const FOLLOW_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
     await page.click(FOLLOW_SELECTOR);
-  //Random waiting time to load and not get kicked from instagram
-    wait_time = Math.floor(Math.random() * 500) + 1000;
     count_follows += 1
   }
-  //await page.waitFor(wait_time);
   // Like
   if (Math.random() >= 0.30) {
     const LIKE_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n';
     await page.click(LIKE_SELECTOR);
-    await page.waitFor(Math.floor(Math.random() * 1000) + 1000);
     count_likes += 1
     if (Math.random() >= 0.8) {
     // Comment
@@ -109,6 +103,7 @@ async function run() {
   console.log("Follows:"+count_follows)
   console.log("Likes:"+count_likes)
   console.log("Comments:"+count_comments)
+  console.log(Date()-date)
   console.log("<--->")
 }
   for (step = 0; step < users.length; step++) {
