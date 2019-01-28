@@ -82,12 +82,14 @@ async function run() {
     const FOLLOW_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
     await page.click(FOLLOW_SELECTOR);
     count_follows += 1
+    await page.waitFor(Math.floor(Math.random() * 4000)+ 1200)
   }
   // Like
   if (Math.random() >= 0.30) {
     const LIKE_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n';
     await page.click(LIKE_SELECTOR);
     count_likes += 1
+    await page.waitFor(Math.floor(Math.random() * 3000)+ 500)
     if (Math.random() >= 0.8) {
     // Comment
       const COMMENT_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div > form > textarea';
@@ -96,6 +98,7 @@ async function run() {
       await page.keyboard.type(comment, {delay:10});
       page.keyboard.press('Enter')
       count_comments += 1
+      await page.waitFor(Math.floor(Math.random() * 5000)+ 800)
     }
   }
 
@@ -103,7 +106,7 @@ async function run() {
   console.log("Follows:"+count_follows)
   console.log("Likes:"+count_likes)
   console.log("Comments:"+count_comments)
-  console.log(Date()-date)
+  console.log(date)
   console.log("<--->")
 }
   for (step = 0; step < users.length; step++) {
