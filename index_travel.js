@@ -85,7 +85,7 @@ async function run() {
     await page.waitFor(Math.floor(Math.random() * 4000)+ 1200)
   }
   // Like
-  if (Math.random() >= 0.30) {
+  if (Math.random() >= 0.50) {
     const LIKE_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n';
     await page.click(LIKE_SELECTOR);
     count_likes += 1
