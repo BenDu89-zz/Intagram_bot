@@ -61,29 +61,30 @@ async function run() {
 
   // Going to the page of the Hashtage
     await page.goto(`https://www.instagram.com/explore/tags/${hashtag}/`, {waitUntil: 'networkidle2'});
-
-    await page.waitForSelector('#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a');
+    await page.waitFor(Math.floor(Math.random() * 100)+ 300)
+    check = page.$('#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a')
+    if (check != null) {
+      await page.waitForSelector('#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a');
 
   // Click on the first photo from the new ones
-    const PHOTO_SELECTOR = '#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a';
-    await page.click(PHOTO_SELECTOR);
-
-    await page.waitForSelector('article header a');
+      const PHOTO_SELECTOR = '#react-root > section > main > article > div:nth-child(3) > div > div:nth-child(1) > div:nth-child(1) > a';
+      await page.click(PHOTO_SELECTOR);
+      await page.waitForSelector('article header a');
 
   // Saveing the username of the person how is the owner of that photo
-    const USER_NAME_SELECTOR = 'article header a';
-    let username = await page.evaluate((sel) => {
-          return document.querySelector(sel).getAttribute('href').replace('/', '');
-        }, USER_NAME_SELECTOR);
+      const USER_NAME_SELECTOR = 'article header a';
+      let username = await page.evaluate((sel) => {
+            return document.querySelector(sel).getAttribute('href').replace('/', '');
+          }, USER_NAME_SELECTOR);
 
-    users[step] = username.replace('/','');
+      users[step] = username.replace('/','');
+    }
   // Follow
   if (Math.random() >= 0.95) {
     const FOLLOW_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
     await page.waitFor(Math.floor(Math.random() * 100)+ 200)
     check = page.$(FOLLOW_SELECTOR);
     if (check != null) {
-      console.log("FOLLOW_SELECTOR is there");
       await page.click(FOLLOW_SELECTOR);
       count_follows += 1
       await page.waitFor(Math.floor(Math.random() * 1200)+ 800)
@@ -95,7 +96,6 @@ async function run() {
     await page.waitFor(Math.floor(Math.random() * 140)+ 180)
     check = page.$(LIKE_SELECTOR);
     if (check != null) {
-      console.log("LIKE_SELECTOR is there");
       await page.click(LIKE_SELECTOR);
       count_likes += 1
       await page.waitFor(Math.floor(Math.random() * 1500)+ 500)
@@ -105,7 +105,6 @@ async function run() {
         await page.waitFor(Math.floor(Math.random() * 80)+ 250);
         check = page.$(COMMENT_SELECTOR);
         if (check != null) {
-          console.log("COMMENT_SELECTOR is there");
           await page.click(COMMENT_SELECTOR);
           var comment = comments[Math.floor(Math.random()*comments.length)];
           await page.keyboard.type(comment, {delay:10});
