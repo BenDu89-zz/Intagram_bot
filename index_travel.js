@@ -6,7 +6,7 @@ var hashtag = "travel";
 // Default waiting time is 0 ms - you can set hier the one you want!
 var wait_time = 0
 // Enter how many runs with the bot you would like to do!
-var runs = 1000
+var runs = 100000
 // This is a given array of comments - change them if you want!
 var comments = [
   "❤️❤️❤️",
@@ -80,25 +80,40 @@ async function run() {
   // Follow
   if (Math.random() >= 0.95) {
     const FOLLOW_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
-    await page.click(FOLLOW_SELECTOR);
-    count_follows += 1
-    await page.waitFor(Math.floor(Math.random() * 4000)+ 1200)
+    await page.waitFor(Math.floor(Math.random() * 100)+ 200)
+    check = page.$(FOLLOW_SELECTOR);
+    if (check != null) {
+      console.log("FOLLOW_SELECTOR is there");
+      await page.click(FOLLOW_SELECTOR);
+      count_follows += 1
+      await page.waitFor(Math.floor(Math.random() * 1200)+ 800)
+    }
   }
   // Like
   if (Math.random() >= 0.50) {
     const LIKE_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n';
-    await page.click(LIKE_SELECTOR);
-    count_likes += 1
-    await page.waitFor(Math.floor(Math.random() * 3000)+ 500)
-    if (Math.random() >= 0.8) {
+    await page.waitFor(Math.floor(Math.random() * 140)+ 180)
+    check = page.$(LIKE_SELECTOR);
+    if (check != null) {
+      console.log("LIKE_SELECTOR is there");
+      await page.click(LIKE_SELECTOR);
+      count_likes += 1
+      await page.waitFor(Math.floor(Math.random() * 1500)+ 500)
+      if (Math.random() >= 0.8) {
     // Comment
-      const COMMENT_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div > form > textarea';
-      await page.click(COMMENT_SELECTOR);
-      var comment = comments[Math.floor(Math.random()*comments.length)];
-      await page.keyboard.type(comment, {delay:10});
-      page.keyboard.press('Enter')
-      count_comments += 1
-      await page.waitFor(Math.floor(Math.random() * 5000)+ 800)
+        const COMMENT_SELECTOR = '      body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div';
+        await page.waitFor(Math.floor(Math.random() * 80)+ 250);
+        check = page.$(COMMENT_SELECTOR);
+        if (check != null) {
+          console.log("COMMENT_SELECTOR is there");
+          await page.click(COMMENT_SELECTOR);
+          var comment = comments[Math.floor(Math.random()*comments.length)];
+          await page.keyboard.type(comment, {delay:10});
+          page.keyboard.press('Enter')
+          count_comments += 1
+          await page.waitFor(Math.floor(Math.random() * 1800)+ 800)
+        }
+      }
     }
   }
 
