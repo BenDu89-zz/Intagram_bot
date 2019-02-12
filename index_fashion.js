@@ -1,8 +1,8 @@
 const puppeteer = require('puppeteer');
-const CREDS = require('./creds');
+const CREDS = require('./credsbb');
 
 // Enter the Hashtag that you are will to crawling with the bot!
-var hashtag = "travel";
+var hashtag = "fashion";
 // Default waiting time is 0 ms - you can set hier the one you want!
 var wait_time = 0
 // Enter how many runs with the bot you would like to do!
@@ -92,7 +92,7 @@ async function run() {
   }
   // Like
   if (Math.random() >= 0.50) {
-    const LIKE_SELECTOR = 'body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n > button > span';
+    const LIKE_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.ltpMr.Slqrh > span.fr66n';
     await page.waitFor(Math.floor(Math.random() * 140)+ 180)
     check = page.$(LIKE_SELECTOR);
     if (check !== null) {
