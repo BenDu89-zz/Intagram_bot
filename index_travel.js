@@ -81,7 +81,7 @@ async function run() {
     }
   // Follow
   if (Math.random() >= 0.95) {
-    const FOLLOW_SELECTOR = 'body > div:nth-child(12) > div > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
+    const FOLLOW_SELECTOR = 'body > div._2dDPU.vCf6V > div.zZYga > div > article > header > div.o-MQd > div.PQo_0 > div.bY2yH > button';
     await page.waitFor(Math.floor(Math.random() * 100)+ 200)
     check = page.$(FOLLOW_SELECTOR);
     if (check !== null) {
@@ -101,7 +101,7 @@ async function run() {
       await page.waitFor(Math.floor(Math.random() * 1500)+ 500)
       if (Math.random() >= 0.8) {
     // Comment
-        const COMMENT_SELECTOR = '      body > div:nth-child(12) > div > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div';
+        const COMMENT_SELECTOR = 'body > div._2dDPU.vCf6V > div.zZYga > div > article > div.eo2As > section.sH9wk._JgwE > div > form > textarea';
         await page.waitFor(Math.floor(Math.random() * 80)+ 250);
         check = page.$(COMMENT_SELECTOR);
         if (check !== null) {
